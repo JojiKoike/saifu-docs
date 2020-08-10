@@ -1,4 +1,4 @@
-@startuml
+@startuml UseCase
 left to right direction
 
 ' Actor
@@ -119,4 +119,4 @@ User --> UC6
 User --> UC7
 User --> UC8
 
-@enduml
+@enduml UseCase
