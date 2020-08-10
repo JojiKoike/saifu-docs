@@ -86,4 +86,4 @@ entity "ユーザー" as user {
 entity "システム設定" as systemSettings {
 }
 
-@enduml ER_Logical
+@enduml
