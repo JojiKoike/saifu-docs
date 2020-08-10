@@ -26,21 +26,10 @@ rectangle SAIFU {
   usecase "テナントにユーザーを招待できる" as UC2_3
  ' SAIFU
   usecase "SAIFUを管理できる" as UC3
-  usecase "手持ち現金を管理できる" as UC3_1
-  usecase "手持ち現金を登録できる" as UC3_1_1
-  usecase "手持ち現金の入出金記録を時系列で参照できる" as UC3_1_2
-  usecase "手持ち現金の登録情報を修正できる" as UC3_1_3
-  usecase "手持ち現金の登録情報を削除できる" as UC3_1_4
-  usecase "銀行口座を管理できる" as UC3_2
-  usecase "銀行口座を登録できる" as UC3_2_1
-  usecase "銀行口座の入出金記録を時系列で参照できる" as UC3_2_2
-  usecase "銀行口座の登録情報を修正できる" as UC3_2_3
-  usecase "銀行口座の登録情報を削除できる" as UC3_2_4
-  usecase "電子マネーを管理できる" as UC3_3
-  usecase "電子マネーを登録できる" as UC3_3_1
-  usecase "電子マネーの入出金記録を時系列で参照できる" as UC3_3_2
-  usecase "電子マネーの登録情報を修正できる" as UC3_3_3
-  usecase "電子マネーの登録情報を削除できる" as UC3_3_4
+  usecase "SAIFUを新規登録できる" as UC3_1
+  usecase "SAIFUの入出金記録を時系列で参照できる" as UC3_2
+  usecase "SAIFUの登録情報を修正できる" as UC3_3
+  usecase "SAIFUの登録情報を削除できる" as UC3_4
   ' 収入
   usecase "収入を管理できる" as UC4
   usecase "収入を記録できる" as UC4_1
@@ -91,21 +80,10 @@ rectangle SAIFU {
   UC2 <- UC2_3 : included
 
   ' User UseCase
-  UC3_1 <-- UC3_1_1 : included1
-  UC3_1 <-- UC3_1_2 : included1
-  UC3_1 <-- UC3_1_3 : included1
-  UC3_1 <-- UC3_1_4 : included1
   UC3 <-- UC3_1 : included
-  UC3_2 <-- UC3_2_1 : included
-  UC3_2 <-- UC3_2_2 : included
-  UC3_2 <-- UC3_2_3 : included
-  UC3_2 <-- UC3_2_4 : included
   UC3 <-- UC3_2 : included
-  UC3_3 <-- UC3_3_1 : included
-  UC3_3 <-- UC3_3_2 : included
-  UC3_3 <-- UC3_3_3 : included
-  UC3_3 <-- UC3_3_4 : included
   UC3 <-- UC3_3 : included
+  UC3 <-- UC3_4 : included
   UC4 <-- UC4_1 : included
   UC4 <-- UC4_2 : included
   UC4 <-- UC4_3 : included
