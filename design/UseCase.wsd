@@ -1,0 +1,122 @@
+@startuml
+left to right direction
+
+' Actor
+SystemAdmin <<SystemAdmin>>
+User <<AppUser>>
+TenantAdminUser <<AppUser>>
+User <|- TenantAdminUser
+
+' Usecase
+rectangle SAIFU_MLM_ENGINE_CORE {
+  ' Usecase Definitions
+  ' System Admin Usecase
+  usecase "システムを管理できる" as UC1
+  usecase "費目情報を登録できる" as UC1_1
+  usecase "収入費目を登録できる" as UC1_1_1
+  usecase "投資費目を登録できる" as UC1_1_2
+  usecase "支出費目を登録できる" as UC1_1_3
+  usecase "負債費目を登録できる" as UC1_1_4
+  usecase "システム管理ユーザーを登録できる" as UC1_2
+  usecase "システム情報を設定できる" as UC1_3
+  ' テナント
+  usecase "テナントを管理できる" as UC2
+  usecase "テナントを作成できる" as UC2_1
+  usecase "テナント管理ユーザーを登録できる" as UC2_2
+  usecase "テナントにユーザーを招待できる" as UC2_3
+ ' SAIFU
+  usecase "SAIFUを管理できる" as UC3
+  usecase "SAIFUを新規登録できる" as UC3_1
+  usecase "SAIFUの入出金記録を時系列で参照できる" as UC3_2
+  usecase "SAIFUの登録情報を修正できる" as UC3_3
+  usecase "SAIFUの登録情報を削除できる" as UC3_4
+  ' 収入
+  usecase "収入を管理できる" as UC4
+  usecase "収入を記録できる" as UC4_1
+  usecase "収入記録を時系列で参照できる" as UC4_2
+  usecase "収入の記録を修正できる" as UC4_3
+  usecase "収入の記録を削除できる" as UC4_4
+  ' 給与控除
+  usecase "給与控除を管理できる" as UC4_5
+  usecase "給与控除を記録できる" as UC4_5_1
+  usecase "給与控除記録を時系列で参照できる" as UC4_5_2
+  usecase "給与控除の記録を修正できる" as UC4_5_3
+  usecase "給与控除の記録を削除できる" as UC4_5_4
+  ' 投資
+  usecase "投資を管理できる" as UC5
+  usecase "投資を記録できる" as UC5_1
+  usecase "投資の記録を時系列で参照できる" as UC5_2
+  usecase "投資の記録を修正できる" as UC5_3
+  usecase "投資の記録を削除できる" as UC5_4
+  ' 支出
+  usecase "支出を管理できる" as UC6
+  usecase "支出を記録できる" as UC6_1
+  usecase "支出の記録を時系列で参照できる" as UC6_2
+  usecase "支出の記録を修正できる" as UC6_3
+  usecase "支出の記録を削除できる" as UC6_4
+  ' 負債
+  usecase "負債を管理できる" as UC7
+  usecase "負債を記録できる" as UC7_1
+  usecase "負債の記録を時系列で参照できる" as UC7_2
+  usecase "負債の記録を修正できる" as UC7_3
+  usecase "負債の記録を削除できる" as UC7_4
+  ' 分析
+  usecase "家計状況を分析できる" as UC8
+  usecase "収支状況を時系列で可視化できる" as UC8_1
+  usecase "費目別支出状況を時系列で可視化できる" as UC8_2
+
+  ' Usecase Structure Definitions
+  ' System Admin UseCase
+  UC1 <- UC1_1 : included
+  UC1_1 <- UC1_1_1 : included
+  UC1_1 <- UC1_1_2 : included
+  UC1_1 <- UC1_1_3 : included
+  UC1 <- UC1_2 : included
+  UC1 <- UC1_3 : included
+
+  ' Tenant Owner User UseCase
+  UC2 <- UC2_1 : included
+  UC2 <- UC2_2 : included
+  UC2 <- UC2_3 : included
+
+  ' User UseCase
+  UC3 <-- UC3_1 : included
+  UC3 <-- UC3_2 : included
+  UC3 <-- UC3_3 : included
+  UC3 <-- UC3_4 : included
+  UC4 <-- UC4_1 : included
+  UC4 <-- UC4_2 : included
+  UC4 <-- UC4_3 : included
+  UC4 <-- UC4_4 : included
+  UC4_5 <-- UC4_5_1 : included
+  UC4_5 <-- UC4_5_2 : included
+  UC4_5 <-- UC4_5_3 : included
+  UC4_5 <-- UC4_5_4 : included
+  UC4 <-- UC4_5 : included
+  UC5 <-- UC5_1 : included
+  UC5 <-- UC5_2 : included
+  UC5 <-- UC5_3 : included
+  UC5 <-- UC5_4 : included
+  UC6 <-- UC6_1 : included
+  UC6 <-- UC6_2 : included
+  UC6 <-- UC6_3 : included
+  UC6 <-- UC6_4 : included
+  UC7 <-- UC7_1 : included
+  UC7 <-- UC7_2 : included
+  UC7 <-- UC7_3 : included
+  UC7 <-- UC7_4 : included
+  UC8 <-- UC8_1 : included
+  UC8 <-- UC8_2 : included
+}
+
+' Usecase And Actor Relationship Definitions
+SystemAdmin --> UC1
+TenantAdminUser --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+
+@enduml
