@@ -1,4 +1,4 @@
-@@startuml
+@startuml ER_Logical
 hide circle
 skinparam linetype ortho
 
@@ -86,4 +86,4 @@ entity "ユーザー" as user {
 entity "システム設定" as systemSettings {
 }
 
-@@enduml
+@enduml ER_Logical
