@@ -8,7 +8,7 @@ TenantAdminUser <<AppUser>>
 User <|- TenantAdminUser
 
 ' Usecase
-rectangle SAIFU {
+rectangle SAIFU_MLM_ENGINE_CORE {
   ' Usecase Definitions
   ' System Admin Usecase
   usecase "システムを管理できる" as UC1
