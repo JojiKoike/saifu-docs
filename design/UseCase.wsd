@@ -37,33 +37,33 @@ rectangle SAIFU {
   usecase "収入の記録を修正できる" as UC4_3
   usecase "収入の記録を削除できる" as UC4_4
   ' 給与控除
-  usecase "給与控除を管理できる" as UC5
-  usecase "給与控除を記録できる" as UC5_1
-  usecase "給与控除記録を時系列で参照できる" as UC5_2
-  usecase "給与控除の記録を修正できる" as UC5_3
-  usecase "給与控除の記録を削除できる" as UC5_4
+  usecase "給与控除を管理できる" as UC4_5
+  usecase "給与控除を記録できる" as UC4_5_1
+  usecase "給与控除記録を時系列で参照できる" as UC4_5_2
+  usecase "給与控除の記録を修正できる" as UC4_5_3
+  usecase "給与控除の記録を削除できる" as UC4_5_4
   ' 投資
-  usecase "投資を管理できる" as UC6
-  usecase "投資を記録できる" as UC6_1
-  usecase "投資の記録を時系列で参照できる" as UC6_2
-  usecase "投資の記録を修正できる" as UC6_3
-  usecase "投資の記録を削除できる" as UC6_4
+  usecase "投資を管理できる" as UC5
+  usecase "投資を記録できる" as UC5_1
+  usecase "投資の記録を時系列で参照できる" as UC5_2
+  usecase "投資の記録を修正できる" as UC5_3
+  usecase "投資の記録を削除できる" as UC5_4
   ' 支出
-  usecase "支出を管理できる" as UC7
-  usecase "支出を記録できる" as UC7_1
-  usecase "支出の記録を時系列で参照できる" as UC7_2
-  usecase "支出の記録を修正できる" as UC7_3
-  usecase "支出の記録を削除できる" as UC7_4
+  usecase "支出を管理できる" as UC6
+  usecase "支出を記録できる" as UC6_1
+  usecase "支出の記録を時系列で参照できる" as UC6_2
+  usecase "支出の記録を修正できる" as UC6_3
+  usecase "支出の記録を削除できる" as UC6_4
   ' 負債
-  usecase "負債を管理できる" as UC8
-  usecase "負債を記録できる" as UC8_1
-  usecase "負債の記録を時系列で参照できる" as UC8_2
-  usecase "負債の記録を修正できる" as UC8_3
-  usecase "負債の記録を削除できる" as UC8_4
+  usecase "負債を管理できる" as UC7
+  usecase "負債を記録できる" as UC7_1
+  usecase "負債の記録を時系列で参照できる" as UC7_2
+  usecase "負債の記録を修正できる" as UC7_3
+  usecase "負債の記録を削除できる" as UC7_4
   ' 分析
-  usecase "家計状況を分析できる" as UC9
-  usecase "収支状況を時系列で可視化できる" as UC9_1
-  usecase "費目別支出状況を時系列で可視化できる" as UC9_2
+  usecase "家計状況を分析できる" as UC8
+  usecase "収支状況を時系列で可視化できる" as UC8_1
+  usecase "費目別支出状況を時系列で可視化できる" as UC8_2
 
   ' Usecase Structure Definitions
   ' System Admin UseCase
@@ -88,11 +88,15 @@ rectangle SAIFU {
   UC4 <-- UC4_2 : included
   UC4 <-- UC4_3 : included
   UC4 <-- UC4_4 : included
+  UC4_5 <-- UC4_5_1 : included
+  UC4_5 <-- UC4_5_2 : included
+  UC4_5 <-- UC4_5_3 : included
+  UC4_5 <-- UC4_5_4 : included
+  UC4 <-- UC4_5 : included
   UC5 <-- UC5_1 : included
   UC5 <-- UC5_2 : included
   UC5 <-- UC5_3 : included
   UC5 <-- UC5_4 : included
-  UC4 <-- UC5 : included
   UC6 <-- UC6_1 : included
   UC6 <-- UC6_2 : included
   UC6 <-- UC6_3 : included
@@ -103,10 +107,6 @@ rectangle SAIFU {
   UC7 <-- UC7_4 : included
   UC8 <-- UC8_1 : included
   UC8 <-- UC8_2 : included
-  UC8 <-- UC8_3 : included
-  UC8 <-- UC8_4 : included
-  UC9 <-- UC9_1 : included
-  UC9 <-- UC9_2 : included
 }
 
 ' Usecase And Actor Relationship Definitions
@@ -114,9 +114,9 @@ SystemAdmin --> UC1
 TenantAdminUser --> UC2
 User --> UC3
 User --> UC4
+User --> UC5
 User --> UC6
 User --> UC7
 User --> UC8
-User --> UC9
 
 @enduml
