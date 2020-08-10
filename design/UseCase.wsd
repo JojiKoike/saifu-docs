@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+
+' Actor
+SystemAdmin <<SystemAdmin>>
+User <<AppUser>>
+AdminUser <<AppUser>>
+User <|- AdminUser
+
+' Usecase
+rectangle SAIFU {
+  ' Usecase Definitions
+  usecase "テナントを作成できる" as UC1_1
+  usecase "テナント管理ユーザーを登録できる" as UC1_1_1
+  usecase "テナントにユーザーを招待できる" as UC1_1_2
+  usecase "費目情報を登録できる" as UC2_1
+  usecase "収入費目を登録できる" as UC2_1_1
+  usecase "投資費目を登録できる" as UC2_1_2
+  usecase "支出費目を登録できる" as UC2_1_3
+  usecase "負債費目を登録できる" as UC2_1_4
+  usecase "システム管理ユーザーを登録できる" as UC2_2
+  usecase "システム情報を設定できる" as UC2_3
+  usecase "収入を記録できる" as UC3_1
+  usecase "収入の記録を修正できる" as UC3_1_1
+  usecase "給与控除を記録できる" as UC3_2
+  usecase "給与控除の記録を修正できる" as UC3_2_1
+  usecase "投資を記録できる" as UC4_1
+  usecase "支出を記録できる" as UC5_1
+  usecase "負債を記録できる" as UC6_1
+  usecase "SAIFUを登録できる" as UC7_1
+  usecase "財布を登録できる" as UC7_1_1
+  usecase "銀行口座を登録できる" as UC7_1_2
+  usecase "電子マネーを登録できる" as UC7_1_3
+  usecase "収支を可視化できる" as UC8_1
+
+  ' Usecase Structure Definitions
+  UC1_1 <-- UC1_1_1 : included
+  UC1_1 <-- UC1_1_2 : extends
+  UC3_1_1 .> UC3_1 : extends
+  UC3_2_1 .> UC3_2 : extends
+  UC3_1 <-- UC3_2 : includeed
+  UC2_1 <-- UC2_1_1 : consists of
+  UC2_1 <-- UC2_1_2 : consists of
+  UC2_1 <-- UC2_1_3 : consists of
+  UC2_1 <-- UC2_1_4 : consists of
+  UC7_1 <-- UC7_1_1 : consists of
+  UC7_1 <-- UC7_1_2 : consists of
+  UC7_1 <-- UC7_1_3 : consists of
+}
+
+' Usecase And Actor Relationship Definitions
+AdminUser --> UC1_1
+SystemAdmin --> UC2_1
+SystemAdmin --> UC2_2
+SystemAdmin --> UC2_3
+User --> UC3_1
+User --> UC4_1
+User --> UC5_1
+User --> UC6_1
+User --> UC7_1
+User --> UC8_1
+
+@enduml
