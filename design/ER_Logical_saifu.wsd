@@ -40,6 +40,7 @@ entity "SAIFUメインカテゴリ" as saifuCategoryMain {
   ** SAIFUメインカテゴリID <PK> **
   --
   SAIFUメインカテゴリ名称
+  説明
   論理削除フラグ
   作成日時
   更新日時
@@ -51,6 +52,7 @@ entity "SAIFUサブカテゴリ" as saifuCategorySub {
   SAIFUメインカテゴリID <FK>
   --
   SAIFUサブカテゴリ名称
+  説明
   論理削除フラグ
   作成日時
   更新日時
@@ -60,11 +62,16 @@ entity "SAIFU履歴" as saifuHistory {
   ** SAIFU履歴ID <PK> **
   --
   SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
   --
   入金額
   出勤額
   残高
   作成日時
+  更新日時
 }
 
 
