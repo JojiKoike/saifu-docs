@@ -15,6 +15,7 @@ entity "ユーザー" as user {
   ** ユーザーID <PK> **
   --
   テナントID <FK>
+  ロールID <FK>
   --
   ログインID
   パスワード
@@ -24,11 +25,21 @@ entity "ユーザー" as user {
   更新日時
 }
 
+entity "ロール" as role {
+  ** ロールID <PK> **
+  --
+  ロール名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
 entity "SAIFU" as saifu {
   ** SAIFU_ID <PK> **
   --
-  ユーザーID <FK1>
-  SAIFUサブカテゴリID <FK2>
+  ユーザーID <FK>
+  SAIFUサブカテゴリID <FK>
   --
   SAIFU_NAME
   論理削除フラグ
@@ -38,6 +49,8 @@ entity "SAIFU" as saifu {
 
 entity "SAIFUメインカテゴリ" as saifuCategoryMain {
   ** SAIFUメインカテゴリID <PK> **
+  --
+  テナントID <FK>
   --
   SAIFUメインカテゴリ名称
   説明
@@ -78,11 +91,13 @@ entity "SAIFU履歴" as saifuHistory {
 ' Relation
 
 ' Account
-tenant ||..|{user
+tenant ||..o{user
+role ||..o{user
 
 ' SAIFU
 user ||..|{saifu
 saifu ||..|{saifuHistory
+tenant ||..|{saifuCategoryMain
 saifuCategoryMain ||..|{saifuCategorySub
 saifuCategorySub ||..o{saifu
 
