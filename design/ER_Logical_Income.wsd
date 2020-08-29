@@ -3,33 +3,120 @@ skinparam linetype ortho
 
 ' Entity
 entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
+  更新日時
 }
 
 entity "収入" as income {
+  ** 収入ID <PK> **
+  --
+  ユーザーID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "収入明細" as incomeDetail {
+  ** 収入明細ID <PK> **
+  --
+  収入サブカテゴリID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "収入メインカテゴリ" as incomeCategoryMain {
+  ** 収入メインカテゴリID <PK> **
+  --
+  収入メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "収入サブカテゴリ" as incomeCategorySub {
+  ** 収入サブカテゴリID <PK> **
+  --
+  収入メインカテゴリID <FK>
+  --
+  収入サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "給与控除" as salaryDeduction {
+  ** 給与控除ID <PK> **
+  --
+  収入ID <FK>
+  --
+  給与控除総額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "投資" as investment {
+  ** 投資ID <PK> **
+  --
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "支出" as expense {
+  ** 支出ID <PK> **
+  --
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "負債" as debt {
+  ** 負債ID <PK> **
+  --
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 ' Relation
@@ -39,7 +126,7 @@ incomeCategoryMain ||..|{incomeCategorySub
 incomeCategorySub ||..o{incomeDetail
 user ||..o{income
 income ||..|{incomeDetail
-incomeDetail ||..||saifuHistory
+income ||..|{saifuHistory
 income ||..||salaryDeduction
 salaryDeduction ||..||investment
 salaryDeduction ||..||expense
