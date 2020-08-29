@@ -2,9 +2,6 @@
 skinparam linetype ortho
 
 ' Entity
-entity "テナント" as tenant {
-}
-
 entity "ユーザー" as user {
 }
 
@@ -39,9 +36,6 @@ entity "負債" as debt {
 }
 
 ' Relation
-
-' Account
-tenant ||..|{user
 
 ' SAIFU
 user ||..|{saifu
