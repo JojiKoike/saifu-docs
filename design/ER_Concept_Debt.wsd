@@ -39,6 +39,7 @@ debt ||..|{debtDetail
 debt ||..||saifuHistory
 debtDetail ||..||debtItemHistory
 debtItem ||..|{debtItemHistory
+debtItem ||..o{debtDetail
 user ||..o{debt
 user ||..o{debtItem
 
