@@ -1,0 +1,46 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "SAIFU履歴" as saifuHistory {
+}
+
+entity "給与控除" as salaryDeduction {
+}
+
+entity "負債" as debt {
+}
+
+entity "負債明細" as debtDetail {
+}
+
+entity "負債アイテム" as debtItem {
+}
+
+entity "負債アイテム履歴" as debtItemHistory {
+}
+
+entity "負債メインカテゴリ" as debtCategoryMain {
+}
+
+entity "負債サブカテゴリ" as debtCategorySub {
+}
+
+entity "ユーザー" as user {
+}
+
+' Relation
+
+' Debt
+debtCategoryMain ||..|{debtCategorySub
+debtCategorySub ||..o{debtItem
+salaryDeduction ||..||debt
+debt ||..|{debtDetail
+debt ||..||saifuHistory
+debtDetail ||..||debtItemHistory
+debtItem ||..|{debtItemHistory
+debtItem ||..o{debtDetail
+user ||..o{debt
+user ||..o{debtItem
+
+@enduml
