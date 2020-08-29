@@ -1,0 +1,84 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "SAIFU" as saifu {
+}
+
+entity "SAIFU履歴" as saifuHistory {
+}
+
+entity "収入" as income {
+}
+
+entity "収入明細" as incomeDetail {
+}
+
+
+entity "給与控除" as salaryDeduction {
+}
+
+entity "給与控除明細" as salaryDeductionDetail {
+}
+
+entity "投資" as investment {
+}
+
+entity "投資明細" as investmentDetail {
+}
+
+entity "投資商品" as investmentItem {
+}
+
+entity "投資商品履歴" as investmentItemHistory {
+}
+
+entity "支出" as expense {
+}
+
+entity "支出明細" as expenseDetail {
+}
+
+entity "負債" as debt {
+}
+
+entity "負債明細" as debtDetail {
+}
+
+entity "負債アイテム" as debtItem {
+}
+
+entity "負債アイテム履歴" as debtItemHistory {
+}
+
+
+' Relation
+
+' SAIFU
+saifu ||..|{saifuHistory
+
+' Expense
+expense ||..||saifuHistory
+expense ||..|{expenseDetail
+
+' Income
+income ||..||saifuHistory
+income ||..|{incomeDetail
+income ||..||salaryDeduction
+salaryDeduction ||..||debt
+salaryDeduction ||..||investment
+salaryDeduction ||..||expense
+
+' Investment
+investment ||..||saifuHistory
+investment ||..|{investmentDetail
+investmentDetail ||..||investmentItemHistory
+investmentItem ||..|{investmentItemHistory
+
+' Debt
+debt ||..||saifuHistory
+debt ||..|{debtDetail
+debtDetail ||..||debtItemHistory
+debtItem ||..|{debtItemHistory
+
+@enduml
