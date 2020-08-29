@@ -3,21 +3,68 @@ skinparam linetype ortho
 
 ' Entity
 entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "SAIFU" as saifu {
+  ** SAIFU_ID <PK> **
+  --
+  ユーザーID <FK1>
+  SAIFUサブカテゴリID <FK2>
+  --
+  SAIFU_NAME
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "SAIFUメインカテゴリ" as saifuCategoryMain {
+  ** SAIFUメインカテゴリID <PK> **
+  --
+  SAIFUメインカテゴリ名称
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "SAIFUサブカテゴリ" as saifuCategorySub {
+  ** SAIFUサブカテゴリID <PK> **
+  --
+  SAIFUメインカテゴリID <FK>
+  --
+  SAIFUサブカテゴリ名称
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
 }
 
 
