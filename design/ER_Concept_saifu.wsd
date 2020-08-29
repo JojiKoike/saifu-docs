@@ -1,0 +1,35 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "テナント" as tenant {
+}
+
+entity "ユーザー" as user {
+}
+
+entity "SAIFU" as saifu {
+}
+
+entity "SAIFUメインカテゴリ" as saifuCategoryMain {
+}
+
+entity "SAIFUサブカテゴリ" as saifuCategorySub {
+}
+
+entity "SAIFU履歴" as saifuHistory {
+}
+
+
+' Relation
+
+' Account
+tenant ||..|{user
+
+' SAIFU
+user ||..|{saifu
+saifu ||..o{saifuHistory
+saifuCategoryMain ||..|{saifuCategorySub
+saifuCategorySub ||..o{saifu
+
+@enduml
