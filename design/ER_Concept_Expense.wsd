@@ -1,0 +1,32 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "SAIFU履歴" as saifuHistory {
+}
+
+entity "支出" as expense {
+}
+
+entity "支出明細" as expenseDetail {
+}
+
+entity "支出メインカテゴリ" as expenseCategoryMain {
+}
+
+entity "支出サブカテゴリ" as expenseCategorySub {
+}
+
+entity "ユーザー" as user {
+}
+
+' Relation
+
+' Expense
+expenseCategoryMain ||..|{expenseCategorySub
+expenseCategorySub ||..o{expenseDetail
+expense ||..|{expenseDetail
+expense ||..||saifuHistory
+user ||..o{expense
+
+@enduml
