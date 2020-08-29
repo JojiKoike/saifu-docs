@@ -1,0 +1,46 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "SAIFU履歴" as saifuHistory {
+}
+
+entity "給与控除" as salaryDeduction {
+}
+
+entity "投資" as investment {
+}
+
+entity "投資明細" as investmentDetail {
+}
+
+entity "投資商品" as investmentItem {
+}
+
+entity "投資商品履歴" as investmentItemHistory {
+}
+
+entity "投資商品メインカテゴリ" as investmentItemCategoryMain {
+}
+
+entity "投資商品サブカテゴリ" as investmentItemCategorySub {
+}
+
+entity "ユーザー" as user {
+}
+
+' Relation
+
+' Investment
+investmentItemCategoryMain ||..|{investmentItemCategorySub
+investmentItemCategorySub ||..o{investmentItem
+salaryDeduction ||..||investment
+investment ||..|{investmentDetail
+investment ||..||saifuHistory
+investmentDetail ||..||investmentItemHistory
+investmentItem ||..|{investmentItemHistory
+investmentItem ||..o{investmentDetail
+user ||..o{investment
+user ||..o{investmentItem
+
+@enduml

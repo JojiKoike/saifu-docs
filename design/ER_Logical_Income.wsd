@@ -1,0 +1,48 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "ユーザー" as user {
+}
+
+entity "SAIFU履歴" as saifuHistory {
+}
+
+entity "収入" as income {
+}
+
+entity "収入明細" as incomeDetail {
+}
+
+entity "収入メインカテゴリ" as incomeCategoryMain {
+}
+
+entity "収入サブカテゴリ" as incomeCategorySub {
+}
+
+entity "給与控除" as salaryDeduction {
+}
+
+entity "投資" as investment {
+}
+
+entity "支出" as expense {
+}
+
+entity "負債" as debt {
+}
+
+' Relation
+
+' Income
+incomeCategoryMain ||..|{incomeCategorySub
+incomeCategorySub ||..o{incomeDetail
+user ||..o{income
+income ||..|{incomeDetail
+incomeDetail ||..||saifuHistory
+income ||..||salaryDeduction
+salaryDeduction ||..||investment
+salaryDeduction ||..||expense
+salaryDeduction ||..||debt
+
+@enduml
