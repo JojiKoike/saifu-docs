@@ -5,9 +5,6 @@ skinparam linetype ortho
 entity "ユーザー" as user {
 }
 
-entity "SAIFU" as saifu {
-}
-
 entity "SAIFU履歴" as saifuHistory {
 }
 
@@ -36,10 +33,6 @@ entity "負債" as debt {
 }
 
 ' Relation
-
-' SAIFU
-user ||..|{saifu
-saifu ||..o{saifuHistory
 
 ' Income
 incomeCategoryMain ||..|{incomeCategorySub
