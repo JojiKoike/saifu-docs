@@ -28,7 +28,7 @@ tenant ||..|{user
 
 ' SAIFU
 user ||..|{saifu
-saifu ||..o{saifuHistory
+saifu ||..|{saifuHistory
 saifuCategoryMain ||..|{saifuCategorySub
 saifuCategorySub ||..o{saifu
 
