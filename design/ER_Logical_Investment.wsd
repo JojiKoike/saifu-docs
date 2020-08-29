@@ -2,36 +2,150 @@
 skinparam linetype ortho
 
 ' Entity
-entity "SAIFU履歴" as saifuHistory {
-}
-
-entity "給与控除" as salaryDeduction {
-}
-
-entity "投資" as investment {
-}
-
-entity "投資明細" as investmentDetail {
-}
-
-entity "投資商品" as investmentItem {
-}
-
-entity "投資商品履歴" as investmentItemHistory {
-}
-
-entity "投資商品メインカテゴリ" as investmentItemCategoryMain {
-}
-
-entity "投資商品サブカテゴリ" as investmentItemCategorySub {
+entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
 }
 
 entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  ロールID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
 }
+
+entity "ロール" as role {
+  ** ロールID <PK> **
+  --
+  ロール名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
+  更新日時
+}
+
+entity "給与控除" as salaryDeduction {
+  ** 給与控除ID <PK> **
+  --
+  収入ID <FK>
+  --
+  給与控除総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資" as investment {
+  ** 投資ID <PK> **
+  --
+  ユーザーID <FK>
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資明細" as investmentDetail {
+  ** 投資明細ID <PK> **
+  --
+  投資ID <FK>
+  投資商品ID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品" as investmentItem {
+  ** 投資商品ID <PK> **
+  --
+  ユーザーID <FK>
+  投資商品サブカテゴリID <FK>
+  --
+  投資商品名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品履歴" as investmentItemHistory {
+  ** 投資商品履歴ID <PK> **
+  --
+  投資明細ID <FK>
+  投資商品ID <FK>
+  --
+  入金額
+  出金額
+  残高
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品メインカテゴリ" as investmentItemCategoryMain {
+  ** 投資商品メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  投資商品メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品サブカテゴリ" as investmentItemCategorySub {
+  ** 投資商品サブカテゴリID <PK> **
+  --
+  投資商品メインカテゴリID <FK>
+  --
+  投資商品サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
 
 ' Relation
 
+' Account
+tenant ||..o{user
+role ||..o{user
+
 ' Investment
+tenant ||..|{investmentItemCategoryMain
 investmentItemCategoryMain ||..|{investmentItemCategorySub
 investmentItemCategorySub ||..o{investmentItem
 salaryDeduction ||..||investment
