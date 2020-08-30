@@ -25,16 +25,6 @@ entity "ユーザー" as user {
   更新日時
 }
 
-entity "ロール" as role {
-  ** ロールID <PK> **
-  --
-  ロール名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
-}
-
 entity "SAIFU履歴" as saifuHistory {
   ** SAIFU履歴ID <PK> **
   --
@@ -142,7 +132,6 @@ entity "投資商品サブカテゴリ" as investmentItemCategorySub {
 
 ' Account
 tenant ||..o{user
-role ||..o{user
 
 ' Investment
 tenant ||..|{investmentItemCategoryMain
