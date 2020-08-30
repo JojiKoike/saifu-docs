@@ -2,6 +2,15 @@
 skinparam linetype ortho
 
 ' Entity
+entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
 entity "ユーザー" as user {
   ** ユーザーID <PK> **
   --
@@ -121,12 +130,16 @@ entity "負債" as debt {
 
 ' Relation
 
+' Account
+tenant ||..o{user
+
 ' Income
+tenant ||..|{incomeCategoryMain
 incomeCategoryMain ||..|{incomeCategorySub
 incomeCategorySub ||..o{incomeDetail
 user ||..o{income
 income ||..|{incomeDetail
-income ||..|{saifuHistory
+income ||..||saifuHistory
 income ||..||salaryDeduction
 salaryDeduction ||..||investment
 salaryDeduction ||..||expense
