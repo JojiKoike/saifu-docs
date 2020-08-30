@@ -18,9 +18,6 @@ entity "収入明細" as incomeDetail {
 entity "給与控除" as salaryDeduction {
 }
 
-entity "給与控除明細" as salaryDeductionDetail {
-}
-
 entity "投資" as investment {
 }
 
