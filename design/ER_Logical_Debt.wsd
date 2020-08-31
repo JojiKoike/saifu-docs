@@ -1,0 +1,150 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  ロールID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
+  更新日時
+}
+
+entity "給与控除" as salaryDeduction {
+  ** 給与控除ID <PK> **
+  --
+  収入ID <FK>
+  --
+  給与控除総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債" as debt {
+  ** 負債ID <PK> **
+  --
+  給与控除ID <FK>
+  ユーザーID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債明細" as debtDetail {
+  ** 負債明細ID <PK> **
+  --
+  負債ID <FK>
+  負債アイテムID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債アイテム" as debtItem {
+  ** 負債アイテムID <PK> **
+  --
+  ユーザーID <FK>
+  負債サブカテゴリID <FK>
+  --
+  負債アイテム名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債アイテム履歴" as debtItemHistory {
+  ** 負債アイテム履歴ID <PK> **
+  --
+  負債明細ID <FK>
+  負債アイテムID <FK>
+  --
+  借入額
+  返済額
+  残金
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債メインカテゴリ" as debtCategoryMain {
+  ** 負債メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  負債メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債サブカテゴリ" as debtCategorySub {
+  ** 負債サブカテゴリID <PK> **
+  --
+  負債メインカテゴリID <FK>
+  --
+  負債メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+
+
+' Relation
+
+' Account
+tenant ||..o{user
+
+' Debt
+tenant ||..|{debtCategoryMain
+debtCategoryMain ||..|{debtCategorySub
+debtCategorySub ||..o{debtItem
+salaryDeduction ||..||debt
+debt ||..|{debtDetail
+debt ||..||saifuHistory
+debtDetail ||..||debtItemHistory
+debtItem ||..o{debtDetail
+debtItem ||..|{debtItemHistory
+user ||..o{debt
+user ||..o{debtItem
+
+@enduml

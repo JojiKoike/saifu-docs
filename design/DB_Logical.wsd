@@ -1,0 +1,400 @@
+
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  ロールID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "ロール" as role {
+  ** ロールID <PK> **
+  --
+  ロール名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFU" as saifu {
+  ** SAIFU_ID <PK> **
+  --
+  ユーザーID <FK>
+  SAIFUサブカテゴリID <FK>
+  --
+  SAIFU_NAME
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFUメインカテゴリ" as saifuCategoryMain {
+  ** SAIFUメインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  SAIFUメインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFUサブカテゴリ" as saifuCategorySub {
+  ** SAIFUサブカテゴリID <PK> **
+  --
+  SAIFUメインカテゴリID <FK>
+  --
+  SAIFUサブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
+  更新日時
+}
+
+entity "収入" as income {
+  ** 収入ID <PK> **
+  --
+  ユーザーID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "収入明細" as incomeDetail {
+  ** 収入明細ID <PK> **
+  --
+  収入サブカテゴリID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "収入メインカテゴリ" as incomeCategoryMain {
+  ** 収入メインカテゴリID <PK> **
+  --
+  収入メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "収入サブカテゴリ" as incomeCategorySub {
+  ** 収入サブカテゴリID <PK> **
+  --
+  収入メインカテゴリID <FK>
+  --
+  収入サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "給与控除" as salaryDeduction {
+  ** 給与控除ID <PK> **
+  --
+  収入ID <FK>
+  --
+  給与控除総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出" as expense {
+  ** 支出ID <PK> **
+  --
+  ユーザーID <FK>
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出明細" as expenseDetail {
+  ** 支出明細ID <PK> **
+  --
+  支出サブカテゴリID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出メインカテゴリ" as expenseCategoryMain {
+  ** 支出メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  支出メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出サブカテゴリ" as expenseCategorySub {
+  ** 支出サブカテゴリID <PK> **
+  --
+  支出メインカテゴリID <FK>
+  --
+  支出サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資" as investment {
+  ** 投資ID <PK> **
+  --
+  ユーザーID <FK>
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資明細" as investmentDetail {
+  ** 投資明細ID <PK> **
+  --
+  投資ID <FK>
+  投資商品ID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品" as investmentItem {
+  ** 投資商品ID <PK> **
+  --
+  ユーザーID <FK>
+  投資商品サブカテゴリID <FK>
+  --
+  投資商品名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品履歴" as investmentItemHistory {
+  ** 投資商品履歴ID <PK> **
+  --
+  投資明細ID <FK>
+  投資商品ID <FK>
+  --
+  入金額
+  出金額
+  残高
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品メインカテゴリ" as investmentItemCategoryMain {
+  ** 投資商品メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  投資商品メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "投資商品サブカテゴリ" as investmentItemCategorySub {
+  ** 投資商品サブカテゴリID <PK> **
+  --
+  投資商品メインカテゴリID <FK>
+  --
+  投資商品サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債" as debt {
+  ** 負債ID <PK> **
+  --
+  給与控除ID <FK>
+  ユーザーID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債明細" as debtDetail {
+  ** 負債明細ID <PK> **
+  --
+  負債ID <FK>
+  負債アイテムID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債アイテム" as debtItem {
+  ** 負債アイテムID <PK> **
+  --
+  ユーザーID <FK>
+  負債サブカテゴリID <FK>
+  --
+  負債アイテム名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債アイテム履歴" as debtItemHistory {
+  ** 負債アイテム履歴ID <PK> **
+  --
+  負債明細ID <FK>
+  負債アイテムID <FK>
+  --
+  借入額
+  返済額
+  残金
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債メインカテゴリ" as debtCategoryMain {
+  ** 負債メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  負債メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "負債サブカテゴリ" as debtCategorySub {
+  ** 負債サブカテゴリID <PK> **
+  --
+  負債メインカテゴリID <FK>
+  --
+  負債メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+' Relation
+
+' Account
+tenant ||..o{user
+role ||..o{user
+
+' SAIFU
+user ||..|{saifu
+saifu ||..|{saifuHistory
+tenant ||..|{saifuCategoryMain
+saifuCategoryMain ||..|{saifuCategorySub
+saifuCategorySub ||..o{saifu
+
+' Income
+tenant ||..|{incomeCategoryMain
+incomeCategoryMain ||..|{incomeCategorySub
+incomeCategorySub ||..o{incomeDetail
+user ||..o{income
+income ||..|{incomeDetail
+income ||..||saifuHistory
+income ||..||salaryDeduction
+salaryDeduction ||..||investment
+salaryDeduction ||..||expense
+salaryDeduction ||..||debt
+
+' Expense
+tenant ||..|{expenseCategoryMain
+expenseCategoryMain ||..|{expenseCategorySub
+expenseCategorySub ||..o{expenseDetail
+expense ||..|{expenseDetail
+expense ||..||saifuHistory
+user ||..o{expense
+
+' Investment
+tenant ||..|{investmentItemCategoryMain
+investmentItemCategoryMain ||..|{investmentItemCategorySub
+investmentItemCategorySub ||..o{investmentItem
+investment ||..|{investmentDetail
+investment ||..||saifuHistory
+investmentDetail ||..||investmentItemHistory
+investmentItem ||..|{investmentItemHistory
+investmentItem ||..o{investmentDetail
+user ||..o{investment
+user ||..o{investmentItem
+
+' Debt
+tenant ||..|{debtCategoryMain
+debtCategoryMain ||..|{debtCategorySub
+debtCategorySub ||..o{debtItem
+debt ||..|{debtDetail
+debt ||..||saifuHistory
+debtDetail ||..||debtItemHistory
+debtItem ||..o{debtDetail
+debtItem ||..|{debtItemHistory
+user ||..o{debt
+user ||..o{debtItem
+
+@enduml

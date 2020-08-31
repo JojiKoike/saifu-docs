@@ -1,0 +1,116 @@
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "テナント" as tenant {
+  ** テナントID <PK> **
+  --
+  テナント名称
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "ユーザー" as user {
+  ** ユーザーID <PK> **
+  --
+  テナントID <FK>
+  --
+  ログインID
+  パスワード
+  e-mail
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "SAIFU履歴" as saifuHistory {
+  ** SAIFU履歴ID <PK> **
+  --
+  SAIFU_ID <FK>
+  収入ID <FK>
+  支出ID <FK>
+  投資ID <FK>
+  負債ID <FK>
+  --
+  入金額
+  出勤額
+  残高
+  作成日時
+  更新日時
+}
+
+entity "給与控除" as salaryDeduction {
+  ** 給与控除ID <PK> **
+  --
+  収入ID <FK>
+  --
+  給与控除総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出" as expense {
+  ** 支出ID <PK> **
+  --
+  ユーザーID <FK>
+  給与控除ID <FK>
+  --
+  総額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出明細" as expenseDetail {
+  ** 支出明細ID <PK> **
+  --
+  支出サブカテゴリID <FK>
+  --
+  金額
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出メインカテゴリ" as expenseCategoryMain {
+  ** 支出メインカテゴリID <PK> **
+  --
+  テナントID <FK>
+  --
+  支出メインカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+entity "支出サブカテゴリ" as expenseCategorySub {
+  ** 支出サブカテゴリID <PK> **
+  --
+  支出メインカテゴリID <FK>
+  --
+  支出サブカテゴリ名称
+  説明
+  論理削除フラグ
+  作成日時
+  更新日時
+}
+
+
+' Relation
+
+' Account
+tenant ||..|{user
+
+' Expense
+tenant ||..|{expenseCategoryMain
+expenseCategoryMain ||..|{expenseCategorySub
+expenseCategorySub ||..o{expenseDetail
+salaryDeduction ||..||expense
+expense ||..|{expenseDetail
+expense ||..||saifuHistory
+user ||..o{expense
+
+@enduml
