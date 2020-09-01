@@ -3,341 +3,384 @@
 skinparam linetype ortho
 
 ' Entity
-entity "テナント" as tenant {
-  ** テナントID <PK> **
+entity "m_tenant" as tenant{
+  ** id : UUID <<generated>> **
   --
-  テナント名称
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(10)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "ユーザー" as user {
-  ** ユーザーID <PK> **
+entity "m_user" as user {
+  ** id : UUID <<generated>> **
   --
-  テナントID <FK>
-  ロールID <FK>
+  tenant_id : UUID <<FK>>
+  role_id : UUID <<FK>>
   --
-  ログインID
-  パスワード
-  e-mail
-  論理削除フラグ
-  作成日時
-  更新日時
+  login_id : VARCHAR(50)
+  password : VARCHAR(30)
+  e-mail : VARCHAR(50)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "ロール" as role {
-  ** ロールID <PK> **
+entity "m_role" as role {
+  ** id : UUID <<generated>> **
   --
-  ロール名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  role_name : VARCHAR(10)
+  role_explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "SAIFU" as saifu {
-  ** SAIFU_ID <PK> **
+entity "m_saifu" as saifu {
+  ** id : UUID <<generated>> **
   --
-  ユーザーID <FK>
-  SAIFUサブカテゴリID <FK>
+  user_id : UUID <<FK>>
+  saifu_sub_category_id : INTEGER <<FK>>
   --
-  SAIFU_NAME
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "SAIFUメインカテゴリ" as saifuCategoryMain {
-  ** SAIFUメインカテゴリID <PK> **
+entity "m_saifu_category_main" as saifuCategoryMain {
+  ** id : SERIAL <<generated>> **
   --
-  テナントID <FK>
+  tenant_id <FK>
   --
-  SAIFUメインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "SAIFUサブカテゴリ" as saifuCategorySub {
-  ** SAIFUサブカテゴリID <PK> **
+entity "m_saifu_category_sub" as saifuCategorySub {
+  ** id : SERIAL <<generated>> **
   --
-  SAIFUメインカテゴリID <FK>
+  saifu_main_category_id : INTEGER <FK>
   --
-  SAIFUサブカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "SAIFU履歴" as saifuHistory {
-  ** SAIFU履歴ID <PK> **
+entity "t_saifu_history" as saifuHistory {
+  ** id : UUID <<generated>> **
   --
-  SAIFU_ID <FK>
-  収入ID <FK>
-  支出ID <FK>
-  投資ID <FK>
-  負債ID <FK>
+  saifu_id : UUID <<FK>>
+  transaction_category_id : INTEGER <<FK>>
   --
-  入金額
-  出勤額
-  残高
-  作成日時
-  更新日時
+  transaction_id : UUID
+  income : BIGINT
+  outcome : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "収入" as income {
-  ** 収入ID <PK> **
+entity "t_saifu_transfer" as saifuTransfer {
+  ** id : UUID <<generated>> **
   --
-  ユーザーID <FK>
+  from_saifu_id : UUID <<FK>>
+  to_saifu_id : UUID <<FK>>
+  user_id : <<FK>>
   --
-  総額
-  論理削除フラグ
-  作成日時
-  更新日時
+  amount : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "収入明細" as incomeDetail {
-  ** 収入明細ID <PK> **
+entity "m_transaction_category" as transactionCategory {
+  ** id : SERIAL <<generated>> **
   --
-  収入サブカテゴリID <FK>
-  --
-  金額
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(10)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "収入メインカテゴリ" as incomeCategoryMain {
-  ** 収入メインカテゴリID <PK> **
+entity "t_income" as income {
+  ** id : UUID <<generated>> **
   --
-  収入メインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  user_id : UUID <<FK>>
+  --
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "収入サブカテゴリ" as incomeCategorySub {
-  ** 収入サブカテゴリID <PK> **
+entity "t_income_detail" as incomeDetail {
+  ** id : UUID <<generated>> **
   --
-  収入メインカテゴリID <FK>
+  income_sub_category_id : INTEGER <FK>
   --
-  収入サブカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "給与控除" as salaryDeduction {
-  ** 給与控除ID <PK> **
+entity "m_income_category_main" as incomeCategoryMain {
+  ** id : SERIAL <<generated>> **
   --
-  収入ID <FK>
+  tenand_id : UUID <<FK>>
   --
-  給与控除総額
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "支出" as expense {
-  ** 支出ID <PK> **
+entity "m_income_category_sub" as incomeCategorySub {
+  ** id : SERIAL <<generated>> **
   --
-  ユーザーID <FK>
-  給与控除ID <FK>
+  income_main_category_id : INTEGER <<FK>>
   --
-  総額
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "支出明細" as expenseDetail {
-  ** 支出明細ID <PK> **
+entity "t_salary_deduction" as salaryDeduction {
+  ** id : UUID <<generated>> **
   --
-  支出サブカテゴリID <FK>
+  income_id : UUID <<FK>>
   --
-  金額
-  論理削除フラグ
-  作成日時
-  更新日時
+  total : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "支出メインカテゴリ" as expenseCategoryMain {
-  ** 支出メインカテゴリID <PK> **
+entity "m_transaction_actor_category" as transactionActorCategory {
+  ** id : SERIAL <<generated>> **
   --
-  テナントID <FK>
-  --
-  支出メインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(10)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "支出サブカテゴリ" as expenseCategorySub {
-  ** 支出サブカテゴリID <PK> **
+entity "t_expense" as expense {
+  ** id : UUID <<generated>> **
   --
-  支出メインカテゴリID <FK>
+  transaction_actor_category_id : INTEGER <<FK>>
   --
-  支出サブカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資" as investment {
-  ** 投資ID <PK> **
+entity "t_expense_detail" as expenseDetail {
+  ** id : UUID <<generated>> **
   --
-  ユーザーID <FK>
-  給与控除ID <FK>
+  expense_sub_category_id : INTEGER <<FK>>
   --
-  総額
-  論理削除フラグ
-  作成日時
-  更新日時
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資明細" as investmentDetail {
-  ** 投資明細ID <PK> **
+entity "m_expense_category_main" as expenseCategoryMain {
+  ** id : SERIAL <<generated>> **
   --
-  投資ID <FK>
-  投資商品ID <FK>
+  tenant_id : UUID <<FK>
   --
-  金額
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資商品" as investmentItem {
-  ** 投資商品ID <PK> **
+entity "m_expense_category_sub" as expenseCategorySub {
+  ** id : SERIAL <<generated>> **
   --
-  ユーザーID <FK>
-  投資商品サブカテゴリID <FK>
+  expense_category_main_id : INTEGER <<FK>>
   --
-  投資商品名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資商品履歴" as investmentItemHistory {
-  ** 投資商品履歴ID <PK> **
+entity "t_investment" as investment {
+  ** id : UUID <<generated>> **
   --
-  投資明細ID <FK>
-  投資商品ID <FK>
+  transaction_actor_category_id : INTEGER <<FK>>
   --
-  入金額
-  出金額
-  残高
-  論理削除フラグ
-  作成日時
-  更新日時
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資商品メインカテゴリ" as investmentItemCategoryMain {
-  ** 投資商品メインカテゴリID <PK> **
+entity "t_investment_detail" as investmentDetail {
+  ** id : UUID <<generated>> **
   --
-  テナントID <FK>
+  investmemt_id : UUID <<FK>>
+  investment_item_id : UUID <<FK>>
   --
-  投資商品メインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "投資商品サブカテゴリ" as investmentItemCategorySub {
-  ** 投資商品サブカテゴリID <PK> **
+entity "m_investment_item" as investmentItem {
+  ** id : UUID <<generated>> **
   --
-  投資商品メインカテゴリID <FK>
+  user_id : UUID <<FK>>
+  investment_item_sub_category_id : INTEGER <<FK>>
   --
-  投資商品サブカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(50)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債" as debt {
-  ** 負債ID <PK> **
+entity "t_investment_item_history" as investmentItemHistory {
+  ** id : UUID <<generated>> **
   --
-  給与控除ID <FK>
-  ユーザーID <FK>
+  investment_detail_id : UUID <<FK>>
+  investment_item_id : UUID <<FK>>
   --
-  総額
-  論理削除フラグ
-  作成日時
-  更新日時
+  income : BIGINT
+  outcome : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債明細" as debtDetail {
-  ** 負債明細ID <PK> **
+entity "m_investment_item_category_main" as investmentItemCategoryMain {
+  ** id : SERIAL <PK> **
   --
-  負債ID <FK>
-  負債アイテムID <FK>
+  tenant_id : UUID <<FK>>
   --
-  金額
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債アイテム" as debtItem {
-  ** 負債アイテムID <PK> **
+entity "m_investment_item_category_sub" as investmentItemCategorySub {
+  ** id : UUID <<generated>> **
   --
-  ユーザーID <FK>
-  負債サブカテゴリID <FK>
+  investment_category_main_id : INTEGER <<FK>>
   --
-  負債アイテム名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債アイテム履歴" as debtItemHistory {
-  ** 負債アイテム履歴ID <PK> **
+entity "debt" as debt {
+  ** id : UUID <<generated>> **
   --
-  負債明細ID <FK>
-  負債アイテムID <FK>
+  transaction_actor_category_id : INTEGER <<FK>>
   --
-  借入額
-  返済額
-  残金
-  論理削除フラグ
-  作成日時
-  更新日時
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment: TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債メインカテゴリ" as debtCategoryMain {
-  ** 負債メインカテゴリID <PK> **
+entity "t_debt_detail" as debtDetail {
+  ** id : UUID <<generated>> **
   --
-  テナントID <FK>
+  debt_id : UUID <<FK>>
+  debt_item_id : UUID <<FK>>
   --
-  負債メインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  amount : BIGINT
+  memo : VARCHAR(100)
+  created : DATETIME
+  updated : DATETIME
 }
 
-entity "負債サブカテゴリ" as debtCategorySub {
-  ** 負債サブカテゴリID <PK> **
+entity "m_debt_item" as debtItem {
+  ** id : UUID <<generated>> **
   --
-  負債メインカテゴリID <FK>
+  user_id : UUID <<FK>>
+  debt_sub_category_id <<FK>>
   --
-  負債メインカテゴリ名称
-  説明
-  論理削除フラグ
-  作成日時
-  更新日時
+  debt_item_name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_debt_item_history" as debtItemHistory {
+  ** id : UUID <<generated>> **
+  --
+  debt_detail_id : UUID <<FK>>
+  debt_item_id : UUID <<FK>>
+  --
+  borrowing : BIGINT
+  repayment : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_debt_category_main" as debtCategoryMain {
+  ** id : SERIAL <<generated>> **
+  --
+  tenant_id : UUID <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_debt_category_sub" as debtCategorySub {
+  ** id : SERIAL <PK> **
+  --
+  debt_category__main_id : INTEGER <FK>
+  --
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
 }
 
 ' Relation
@@ -352,6 +395,9 @@ saifu ||..|{saifuHistory
 tenant ||..|{saifuCategoryMain
 saifuCategoryMain ||..|{saifuCategorySub
 saifuCategorySub ||..o{saifu
+transactionCategory ||..|{saifuHistory
+saifu ||..o{saifuTransfer
+saifuTransfer ||..|| saifuHistory
 
 ' Income
 tenant ||..|{incomeCategoryMain
@@ -361,40 +407,45 @@ user ||..o{income
 income ||..|{incomeDetail
 income ||..||saifuHistory
 income ||..||salaryDeduction
-salaryDeduction ||..||investment
-salaryDeduction ||..||expense
-salaryDeduction ||..||debt
 
 ' Expense
 tenant ||..|{expenseCategoryMain
 expenseCategoryMain ||..|{expenseCategorySub
 expenseCategorySub ||..o{expenseDetail
+transactionActorCategory ||..|{expense
 expense ||..|{expenseDetail
 expense ||..||saifuHistory
-user ||..o{expense
 
 ' Investment
 tenant ||..|{investmentItemCategoryMain
 investmentItemCategoryMain ||..|{investmentItemCategorySub
 investmentItemCategorySub ||..o{investmentItem
+transactionActorCategory ||..|{investment
 investment ||..|{investmentDetail
 investment ||..||saifuHistory
 investmentDetail ||..||investmentItemHistory
 investmentItem ||..|{investmentItemHistory
 investmentItem ||..o{investmentDetail
-user ||..o{investment
 user ||..o{investmentItem
 
 ' Debt
 tenant ||..|{debtCategoryMain
 debtCategoryMain ||..|{debtCategorySub
 debtCategorySub ||..o{debtItem
+transactionActorCategory ||..{debt
 debt ||..|{debtDetail
 debt ||..||saifuHistory
 debtDetail ||..||debtItemHistory
 debtItem ||..o{debtDetail
 debtItem ||..|{debtItemHistory
-user ||..o{debt
 user ||..o{debtItem
+
+' Note
+note left of expense
+transaction_actor_idには
+user_id, もしくは
+salary_deduction_idが入る
+(t_investment, t_debtも同様)
+end note
 
 @enduml
