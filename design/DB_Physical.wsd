@@ -1,0 +1,451 @@
+
+@startuml ER_Concept
+skinparam linetype ortho
+
+' Entity
+entity "m_tenants" as tenant{
+  ** id : UUID <<generated>> **
+  --
+  name : VARCHAR(10)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_users" as user {
+  ** id : UUID <<generated>> **
+  --
+  tenant_id : UUID <<FK>>
+  role_id : UUID <<FK>>
+  --
+  login_id : VARCHAR(50)
+  password : VARCHAR(30)
+  e-mail : VARCHAR(50)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_roles" as role {
+  ** id : UUID <<generated>> **
+  --
+  role_name : VARCHAR(10)
+  role_explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_saifu" as saifu {
+  ** id : UUID <<generated>> **
+  --
+  user_id : UUID <<FK>>
+  saifu_sub_category_id : INTEGER <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_saifu_main_categories" as saifuCategoryMain {
+  ** id : SERIAL <<generated>> **
+  --
+  tenant_id <FK>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_saifu_sub_categories" as saifuCategorySub {
+  ** id : SERIAL <<generated>> **
+  --
+  saifu_main_category_id : INTEGER <FK>
+  --
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_saifu_histories" as saifuHistory {
+  ** id : UUID <<generated>> **
+  --
+  saifu_id : UUID <<FK>>
+  transaction_category_id : INTEGER <<FK>>
+  --
+  transaction_id : UUID
+  income : BIGINT
+  outcome : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_saifu_transferes" as saifuTransfer {
+  ** id : UUID <<generated>> **
+  --
+  from_saifu_id : UUID <<FK>>
+  to_saifu_id : UUID <<FK>>
+  user_id : UUID <<FK>>
+  --
+  amount : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_transaction_categories" as transactionCategory {
+  ** id : SERIAL <<generated>> **
+  --
+  name : VARCHAR(10)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_income" as income {
+  ** id : UUID <<generated>> **
+  --
+  user_id : UUID <<FK>>
+  --
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_income_details" as incomeDetail {
+  ** id : UUID <<generated>> **
+  --
+  income_sub_category_id : INTEGER <FK>
+  --
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_income_main_categories" as incomeCategoryMain {
+  ** id : SERIAL <<generated>> **
+  --
+  tenand_id : UUID <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_income_sub_categories" as incomeCategorySub {
+  ** id : SERIAL <<generated>> **
+  --
+  income_main_category_id : INTEGER <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_salary_deduction" as salaryDeduction {
+  ** id : UUID <<generated>> **
+  --
+  income_id : UUID <<FK>>
+  --
+  total : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_transaction_actor_categories" as transactionActorCategory {
+  ** id : SERIAL <<generated>> **
+  --
+  name : VARCHAR(10)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_expense" as expense {
+  ** id : UUID <<generated>> **
+  --
+  transaction_actor_category_id : INTEGER <<FK>>
+  --
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_expense_details" as expenseDetail {
+  ** id : UUID <<generated>> **
+  --
+  expense_sub_category_id : INTEGER <<FK>>
+  --
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_expense_main_categories" as expenseCategoryMain {
+  ** id : SERIAL <<generated>> **
+  --
+  tenant_id : UUID <<FK>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_expense_sub_categories" as expenseCategorySub {
+  ** id : SERIAL <<generated>> **
+  --
+  expense_category_main_id : INTEGER <<FK>>
+  --
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_investment" as investment {
+  ** id : UUID <<generated>> **
+  --
+  transaction_actor_category_id : INTEGER <<FK>>
+  --
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_investment_details" as investmentDetail {
+  ** id : UUID <<generated>> **
+  --
+  investmemt_id : UUID <<FK>>
+  investment_item_id : UUID <<FK>>
+  --
+  amount : BIGINT
+  memo : VARCHAR(100)
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_investment_items" as investmentItem {
+  ** id : UUID <<generated>> **
+  --
+  user_id : UUID <<FK>>
+  investment_item_sub_category_id : INTEGER <<FK>>
+  --
+  name : VARCHAR(50)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_investment_item_histories" as investmentItemHistory {
+  ** id : UUID <<generated>> **
+  --
+  investment_detail_id : UUID <<FK>>
+  investment_item_id : UUID <<FK>>
+  --
+  income : BIGINT
+  outcome : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_investment_item_main_categories" as investmentItemCategoryMain {
+  ** id : SERIAL <PK> **
+  --
+  tenant_id : UUID <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_investment_item_sub_categories" as investmentItemCategorySub {
+  ** id : UUID <<generated>> **
+  --
+  investment_category_main_id : INTEGER <<FK>>
+  --
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "debt" as debt {
+  ** id : UUID <<generated>> **
+  --
+  transaction_actor_category_id : INTEGER <<FK>>
+  --
+  transaction_actor_id : UUID
+  total : BIGINT
+  comment: TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_debt_details" as debtDetail {
+  ** id : UUID <<generated>> **
+  --
+  debt_id : UUID <<FK>>
+  debt_item_id : UUID <<FK>>
+  --
+  amount : BIGINT
+  memo : VARCHAR(100)
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_debt_items" as debtItem {
+  ** id : UUID <<generated>> **
+  --
+  user_id : UUID <<FK>>
+  debt_sub_category_id <<FK>>
+  --
+  debt_item_name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "t_debt_item_histories" as debtItemHistory {
+  ** id : UUID <<generated>> **
+  --
+  debt_detail_id : UUID <<FK>>
+  debt_item_id : UUID <<FK>>
+  --
+  borrowing : BIGINT
+  repayment : BIGINT
+  balance : BIGINT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_debt_main_categories" as debtCategoryMain {
+  ** id : SERIAL <<generated>> **
+  --
+  tenant_id : UUID <<FK>>
+  --
+  name : VARCHAR(20)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_debt_sub_categories" as debtCategorySub {
+  ** id : SERIAL <PK> **
+  --
+  debt_category__main_id : INTEGER <FK>
+  --
+  name : VARCHAR(30)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+' Relation
+
+' Account
+tenant ||..o{user
+role ||..o{user
+
+' SAIFU
+user ||..|{saifu
+saifu ||..|{saifuHistory
+tenant ||..|{saifuCategoryMain
+saifuCategoryMain ||..|{saifuCategorySub
+saifuCategorySub ||..o{saifu
+transactionCategory ||..o{saifuHistory
+saifu ||..o{saifuTransfer
+saifuTransfer ||..|| saifuHistory
+
+' Income
+tenant ||..|{incomeCategoryMain
+incomeCategoryMain ||..|{incomeCategorySub
+incomeCategorySub ||..o{incomeDetail
+user ||..o{income
+income ||..|{incomeDetail
+income ||..||saifuHistory
+income ||..o|salaryDeduction
+
+' Expense
+tenant ||..|{expenseCategoryMain
+expenseCategoryMain ||..|{expenseCategorySub
+expenseCategorySub ||..o{expenseDetail
+transactionActorCategory ||..|{expense
+expense ||..|{expenseDetail
+expense ||..||saifuHistory
+
+' Investment
+tenant ||..|{investmentItemCategoryMain
+investmentItemCategoryMain ||..|{investmentItemCategorySub
+investmentItemCategorySub ||..o{investmentItem
+transactionActorCategory ||..o{investment
+investment ||..|{investmentDetail
+investment ||..||saifuHistory
+investmentDetail ||..||investmentItemHistory
+investmentItem ||..|{investmentItemHistory
+investmentItem ||..o{investmentDetail
+user ||..o{investmentItem
+
+' Debt
+tenant ||..|{debtCategoryMain
+debtCategoryMain ||..|{debtCategorySub
+debtCategorySub ||..o{debtItem
+transactionActorCategory ||..o{debt
+debt ||..|{debtDetail
+debt ||..||saifuHistory
+debtDetail ||..||debtItemHistory
+debtItem ||..o{debtDetail
+debtItem ||..|{debtItemHistory
+user ||..o{debtItem
+
+' Note
+note left of expense
+transaction_actor_idには
+user_id, もしくは
+salary_deduction_idが入る
+(t_investment, t_debtも同様)
+end note
+
+@enduml
