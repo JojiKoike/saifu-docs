@@ -3,7 +3,7 @@
 skinparam linetype ortho
 
 ' Entity
-entity "m_tenant" as tenant{
+entity "m_tenants" as tenant{
   ** id : UUID <<generated>> **
   --
   name : VARCHAR(10)
@@ -12,7 +12,7 @@ entity "m_tenant" as tenant{
   updated : DATETIME
 }
 
-entity "m_user" as user {
+entity "m_users" as user {
   ** id : UUID <<generated>> **
   --
   tenant_id : UUID <<FK>>
@@ -26,7 +26,7 @@ entity "m_user" as user {
   updated : DATETIME
 }
 
-entity "m_role" as role {
+entity "m_roles" as role {
   ** id : UUID <<generated>> **
   --
   role_name : VARCHAR(10)
@@ -49,7 +49,7 @@ entity "m_saifu" as saifu {
   updated : DATETIME
 }
 
-entity "m_saifu_category_main" as saifuCategoryMain {
+entity "m_saifu_main_categories" as saifuCategoryMain {
   ** id : SERIAL <<generated>> **
   --
   tenant_id <FK>
@@ -61,7 +61,7 @@ entity "m_saifu_category_main" as saifuCategoryMain {
   updated : DATETIME
 }
 
-entity "m_saifu_category_sub" as saifuCategorySub {
+entity "m_saifu_sub_categories" as saifuCategorySub {
   ** id : SERIAL <<generated>> **
   --
   saifu_main_category_id : INTEGER <FK>
@@ -73,7 +73,7 @@ entity "m_saifu_category_sub" as saifuCategorySub {
   updated : DATETIME
 }
 
-entity "t_saifu_history" as saifuHistory {
+entity "t_saifu_histories" as saifuHistory {
   ** id : UUID <<generated>> **
   --
   saifu_id : UUID <<FK>>
@@ -88,12 +88,12 @@ entity "t_saifu_history" as saifuHistory {
   updated : DATETIME
 }
 
-entity "t_saifu_transfer" as saifuTransfer {
+entity "t_saifu_transferes" as saifuTransfer {
   ** id : UUID <<generated>> **
   --
   from_saifu_id : UUID <<FK>>
   to_saifu_id : UUID <<FK>>
-  user_id : <<FK>>
+  user_id : UUID <<FK>>
   --
   amount : BIGINT
   comment : TEXT
@@ -102,7 +102,7 @@ entity "t_saifu_transfer" as saifuTransfer {
   updated : DATETIME
 }
 
-entity "m_transaction_category" as transactionCategory {
+entity "m_transaction_categories" as transactionCategory {
   ** id : SERIAL <<generated>> **
   --
   name : VARCHAR(10)
@@ -124,7 +124,7 @@ entity "t_income" as income {
   updated : DATETIME
 }
 
-entity "t_income_detail" as incomeDetail {
+entity "t_income_details" as incomeDetail {
   ** id : UUID <<generated>> **
   --
   income_sub_category_id : INTEGER <FK>
@@ -136,7 +136,7 @@ entity "t_income_detail" as incomeDetail {
   updated : DATETIME
 }
 
-entity "m_income_category_main" as incomeCategoryMain {
+entity "m_income_main_categories" as incomeCategoryMain {
   ** id : SERIAL <<generated>> **
   --
   tenand_id : UUID <<FK>>
@@ -148,7 +148,7 @@ entity "m_income_category_main" as incomeCategoryMain {
   updated : DATETIME
 }
 
-entity "m_income_category_sub" as incomeCategorySub {
+entity "m_income_sub_categories" as incomeCategorySub {
   ** id : SERIAL <<generated>> **
   --
   income_main_category_id : INTEGER <<FK>>
@@ -171,7 +171,7 @@ entity "t_salary_deduction" as salaryDeduction {
   updated : DATETIME
 }
 
-entity "m_transaction_actor_category" as transactionActorCategory {
+entity "m_transaction_actor_categories" as transactionActorCategory {
   ** id : SERIAL <<generated>> **
   --
   name : VARCHAR(10)
@@ -194,7 +194,7 @@ entity "t_expense" as expense {
   updated : DATETIME
 }
 
-entity "t_expense_detail" as expenseDetail {
+entity "t_expense_details" as expenseDetail {
   ** id : UUID <<generated>> **
   --
   expense_sub_category_id : INTEGER <<FK>>
@@ -206,7 +206,7 @@ entity "t_expense_detail" as expenseDetail {
   updated : DATETIME
 }
 
-entity "m_expense_category_main" as expenseCategoryMain {
+entity "m_expense_main_categories" as expenseCategoryMain {
   ** id : SERIAL <<generated>> **
   --
   tenant_id : UUID <<FK>
@@ -218,7 +218,7 @@ entity "m_expense_category_main" as expenseCategoryMain {
   updated : DATETIME
 }
 
-entity "m_expense_category_sub" as expenseCategorySub {
+entity "m_expense_sub_categories" as expenseCategorySub {
   ** id : SERIAL <<generated>> **
   --
   expense_category_main_id : INTEGER <<FK>>
@@ -243,7 +243,7 @@ entity "t_investment" as investment {
   updated : DATETIME
 }
 
-entity "t_investment_detail" as investmentDetail {
+entity "t_investment_details" as investmentDetail {
   ** id : UUID <<generated>> **
   --
   investmemt_id : UUID <<FK>>
@@ -256,7 +256,7 @@ entity "t_investment_detail" as investmentDetail {
   updated : DATETIME
 }
 
-entity "m_investment_item" as investmentItem {
+entity "m_investment_items" as investmentItem {
   ** id : UUID <<generated>> **
   --
   user_id : UUID <<FK>>
@@ -269,7 +269,7 @@ entity "m_investment_item" as investmentItem {
   updated : DATETIME
 }
 
-entity "t_investment_item_history" as investmentItemHistory {
+entity "t_investment_item_histories" as investmentItemHistory {
   ** id : UUID <<generated>> **
   --
   investment_detail_id : UUID <<FK>>
@@ -283,7 +283,7 @@ entity "t_investment_item_history" as investmentItemHistory {
   updated : DATETIME
 }
 
-entity "m_investment_item_category_main" as investmentItemCategoryMain {
+entity "m_investment_item_main_categories" as investmentItemCategoryMain {
   ** id : SERIAL <PK> **
   --
   tenant_id : UUID <<FK>>
@@ -295,7 +295,7 @@ entity "m_investment_item_category_main" as investmentItemCategoryMain {
   updated : DATETIME
 }
 
-entity "m_investment_item_category_sub" as investmentItemCategorySub {
+entity "m_investment_item_sub_categories" as investmentItemCategorySub {
   ** id : UUID <<generated>> **
   --
   investment_category_main_id : INTEGER <<FK>>
@@ -320,7 +320,7 @@ entity "debt" as debt {
   updated : DATETIME
 }
 
-entity "t_debt_detail" as debtDetail {
+entity "t_debt_details" as debtDetail {
   ** id : UUID <<generated>> **
   --
   debt_id : UUID <<FK>>
@@ -332,7 +332,7 @@ entity "t_debt_detail" as debtDetail {
   updated : DATETIME
 }
 
-entity "m_debt_item" as debtItem {
+entity "m_debt_items" as debtItem {
   ** id : UUID <<generated>> **
   --
   user_id : UUID <<FK>>
@@ -345,7 +345,7 @@ entity "m_debt_item" as debtItem {
   updated : DATETIME
 }
 
-entity "t_debt_item_history" as debtItemHistory {
+entity "t_debt_item_histories" as debtItemHistory {
   ** id : UUID <<generated>> **
   --
   debt_detail_id : UUID <<FK>>
@@ -359,7 +359,7 @@ entity "t_debt_item_history" as debtItemHistory {
   updated : DATETIME
 }
 
-entity "m_debt_category_main" as debtCategoryMain {
+entity "m_debt_main_categories" as debtCategoryMain {
   ** id : SERIAL <<generated>> **
   --
   tenant_id : UUID <<FK>>
@@ -371,7 +371,7 @@ entity "m_debt_category_main" as debtCategoryMain {
   updated : DATETIME
 }
 
-entity "m_debt_category_sub" as debtCategorySub {
+entity "m_debt_sub_categories" as debtCategorySub {
   ** id : SERIAL <PK> **
   --
   debt_category__main_id : INTEGER <FK>
@@ -395,7 +395,7 @@ saifu ||..|{saifuHistory
 tenant ||..|{saifuCategoryMain
 saifuCategoryMain ||..|{saifuCategorySub
 saifuCategorySub ||..o{saifu
-transactionCategory ||..|{saifuHistory
+transactionCategory ||..o{saifuHistory
 saifu ||..o{saifuTransfer
 saifuTransfer ||..|| saifuHistory
 
@@ -406,7 +406,7 @@ incomeCategorySub ||..o{incomeDetail
 user ||..o{income
 income ||..|{incomeDetail
 income ||..||saifuHistory
-income ||..||salaryDeduction
+income ||..o|salaryDeduction
 
 ' Expense
 tenant ||..|{expenseCategoryMain
@@ -420,7 +420,7 @@ expense ||..||saifuHistory
 tenant ||..|{investmentItemCategoryMain
 investmentItemCategoryMain ||..|{investmentItemCategorySub
 investmentItemCategorySub ||..o{investmentItem
-transactionActorCategory ||..|{investment
+transactionActorCategory ||..o{investment
 investment ||..|{investmentDetail
 investment ||..||saifuHistory
 investmentDetail ||..||investmentItemHistory
@@ -432,7 +432,7 @@ user ||..o{investmentItem
 tenant ||..|{debtCategoryMain
 debtCategoryMain ||..|{debtCategorySub
 debtCategorySub ||..o{debtItem
-transactionActorCategory ||..{debt
+transactionActorCategory ||..o{debt
 debt ||..|{debtDetail
 debt ||..||saifuHistory
 debtDetail ||..||debtItemHistory
