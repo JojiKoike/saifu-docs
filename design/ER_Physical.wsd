@@ -7,6 +7,17 @@ entity "m_tenants" as tenant{
   ** id : UUID <<generated>> **
   --
   name : VARCHAR(10)
+  explain : TEXT
+  delete_flag : BOOLEAN
+  created : DATETIME
+  updated : DATETIME
+}
+
+entity "m_roles" as role {
+  ** id : UUID <<generated>> **
+  --
+  name : VARCHAR(10)
+  explain : TEXT
   delete_flag : BOOLEAN
   created : DATETIME
   updated : DATETIME
@@ -21,16 +32,6 @@ entity "m_users" as user {
   login_id : VARCHAR(100)
   name: VARCHAR(30)
   password : VARCHAR(30)
-  delete_flag : BOOLEAN
-  created : DATETIME
-  updated : DATETIME
-}
-
-entity "m_roles" as role {
-  ** id : UUID <<generated>> **
-  --
-  role_name : VARCHAR(10)
-  role_explain : TEXT
   delete_flag : BOOLEAN
   created : DATETIME
   updated : DATETIME
